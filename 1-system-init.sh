@@ -1,3 +1,4 @@
+#!/bin/bash
 # 安装依赖包
 yum install -y epel-release
 yum install -y chrony conntrack ipvsadm ipset jq iptables curl sysstat libseccomp wget socat git
@@ -15,7 +16,7 @@ iptables -P FORWARD ACCEPT
 
 #关闭selinux
 setenforce 0
-sed -ri 's/SELINUX=enforcing/SELINUX=disabled/' /etc/selinux/config
+sed -i 's/^SELINUX=enforcing$/SELINUX=permissive/' /etc/selinux/config
 cat /etc/selinux/config  | grep -w "SELINUX"
 
 #时间同步
@@ -34,11 +35,12 @@ systemctl restart rsyslog
 systemctl restart crond
 
 #修改内核参数
-echo 'vm.max_map_count=262144' >> /etc/sysctl.conf
-echo 'net.ipv4.ip_forward = 1' >> /etc/sysctl.conf
-echo 'net.bridge.bridge-nf-call-ip6tables = 1' >> /etc/sysctl.conf
-echo 'net.bridge.bridge-nf-call-iptables = 1' >> /etc/sysctl.conf
-echo 'vm.drop_caches=3' >> /etc/sysctl.conf
-sysctl -p
-ulimit -c 0 && echo 'ulimit -S -c 0' >>/etc/profile
-modprobe iptable_nat
+cat <<EOF | tee /etc/modules-load.d/k8s.conf
+br_netfilter
+EOF
+
+cat <<EOF | tee /etc/sysctl.d/k8s.conf
+net.bridge.bridge-nf-call-ip6tables = 1
+net.bridge.bridge-nf-call-iptables = 1
+EOF
+sudo sysctl --system

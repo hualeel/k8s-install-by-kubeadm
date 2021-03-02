@@ -1,4 +1,4 @@
-# 安装依赖抱
+# 安装依赖包
 yum install -y epel-release
 yum install -y chrony conntrack ipvsadm ipset jq iptables curl sysstat libseccomp wget socat git
 
@@ -36,6 +36,8 @@ systemctl restart crond
 #修改内核参数
 echo 'vm.max_map_count=262144' >> /etc/sysctl.conf
 echo 'net.ipv4.ip_forward = 1' >> /etc/sysctl.conf
+echo 'net.bridge.bridge-nf-call-ip6tables = 1' >> /etc/sysctl.conf
+echo 'net.bridge.bridge-nf-call-iptables = 1' >> /etc/sysctl.conf
 echo 'vm.drop_caches=3' >> /etc/sysctl.conf
 sysctl -p
 ulimit -c 0 && echo 'ulimit -S -c 0' >>/etc/profile

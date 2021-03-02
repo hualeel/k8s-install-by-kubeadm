@@ -1,4 +1,4 @@
-cat > /etc/yum.repos.d/docker-ce.repo <<-EOF
+cat > /etc/yum.repos.d/docker-ce.repo <<EOF
 [docker-ce-stable]
 name=Docker CE Stable Mirror Repository
 baseurl=https://mirrors.aliyun.com/docker-ce/linux/centos/7/x86_64/stable

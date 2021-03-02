@@ -1,3 +1,4 @@
+#!/bin/bash
 kubeadm init \
 --apiserver-advertise-address=192.168.0.68 \
 --image-repository=registry.aliyuncs.com/google_containers \

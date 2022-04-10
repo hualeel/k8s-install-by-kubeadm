@@ -1,7 +1,7 @@
 #!/bin/bash
 # 安装依赖包
 yum install -y epel-release
-yum install -y chrony conntrack ipvsadm ipset jq iptables curl sysstat libseccomp wget socat git
+yum install -y chrony conntrack ipvsadm ipset jq iptables curl sysstat libseccomp wget socat git httpd-tools nc
 
 #关闭swap
 swapoff -a

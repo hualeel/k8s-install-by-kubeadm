@@ -70,4 +70,5 @@ networking:
 scheduler: {}
 EOF
 
-
+# 开始部署
+kubeadm init --config=init.yml

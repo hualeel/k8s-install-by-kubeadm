@@ -24,4 +24,4 @@ cat > /etc/docker/daemon.json <<-EOF
 EOF
 systemctl enable docker
 systemctl daemon-reload
-systemctl start docker
+systemctl restart docker
